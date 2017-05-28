@@ -1,4 +1,7 @@
-﻿using Nop.Services.Configuration;
+﻿using Nop.Core;
+using Nop.Core.Domain.Directory;
+using Nop.Services.Configuration;
+using Nop.Services.Directory;
 using Nop.Services.Payments;
 using System;
 using Uol.PagSeguro;
@@ -7,11 +10,18 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
 {
     public class PagSeguroService : IPagSeguroService
     {
-        private readonly ISettingService _settingService;
+        //colocar a moeda utilizadas como configuração
+        private const string CURRENCY_CODE = "BRL";
 
-        public PagSeguroService(ISettingService settingService)
+        private readonly ISettingService _settingService;
+        private readonly ICurrencyService _currencyService;
+        private readonly CurrencySettings _currencySettings;
+
+        public PagSeguroService(ISettingService settingService, ICurrencyService currencyService, CurrencySettings currencySettings)
         {
             this._settingService = settingService;
+            this._currencyService = currencyService;
+            this._currencySettings = currencySettings;
         }
 
         public Uri CreatePayment(PostProcessPaymentRequest postProcessPaymentRequest)
@@ -21,7 +31,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
             AccountCredentials credentials = new AccountCredentials(@pagSeguroPaymentSetting.PagSeguroEmail, @pagSeguroPaymentSetting.PagSeguroToken);
 
             PaymentRequest payment = new PaymentRequest();
-            payment.Currency = postProcessPaymentRequest.Order.CustomerCurrencyCode;
+            payment.Currency = CURRENCY_CODE;
             payment.Reference = postProcessPaymentRequest.Order.Id.ToString();
 
             LoadingItems(postProcessPaymentRequest, payment);
@@ -36,6 +46,18 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
             payment.Sender = new Sender();
             payment.Sender.Email = postProcessPaymentRequest.Order.Customer.Email;
             payment.Sender.Name = postProcessPaymentRequest.Order.BillingAddress.FirstName + " " + postProcessPaymentRequest.Order.BillingAddress.LastName;
+        }
+
+        private decimal GetConvertedRate(decimal rate, PostProcessPaymentRequest postProcessPaymentRequest)
+        {
+            var usedCurrency = _currencyService.GetCurrencyByCode(CURRENCY_CODE);
+            if (usedCurrency == null)
+                throw new NopException($"PagSeguro payment service. Could not load \"{CURRENCY_CODE}\" currency");
+
+            if (usedCurrency.CurrencyCode == _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode)
+                return rate;
+            else
+                return _currencyService.ConvertFromPrimaryStoreCurrency(rate, usedCurrency);
         }
 
         private void LoadingShipping(PostProcessPaymentRequest postProcessPaymentRequest, PaymentRequest payment)
@@ -61,7 +83,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
             foreach (var product in postProcessPaymentRequest.Order.OrderItems)
             {
                 Item item = new Item();
-                item.Amount = Math.Round(product.UnitPriceInclTax, 2);
+                item.Amount = Math.Round(GetConvertedRate(product.UnitPriceInclTax, postProcessPaymentRequest), 2);
                 item.Description = product.Product.Name;
                 item.Id = product.Id.ToString();
                 item.Quantity = product.Quantity;
