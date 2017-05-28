@@ -48,7 +48,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
             payment.Sender.Name = postProcessPaymentRequest.Order.BillingAddress.FirstName + " " + postProcessPaymentRequest.Order.BillingAddress.LastName;
         }
 
-        private decimal GetConvertedRate(decimal rate, PostProcessPaymentRequest postProcessPaymentRequest)
+        private decimal GetConvertedRate(decimal rate)
         {
             var usedCurrency = _currencyService.GetCurrencyByCode(CURRENCY_CODE);
             if (usedCurrency == null)
@@ -76,6 +76,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
                 adress.State = postProcessPaymentRequest.Order.ShippingAddress.StateProvince.Name;
                 adress.Street = postProcessPaymentRequest.Order.ShippingAddress.Address1;
             }
+            payment.Shipping.Cost = Math.Round(GetConvertedRate(postProcessPaymentRequest.Order.OrderShippingInclTax), 2);
         }
 
         private void LoadingItems(PostProcessPaymentRequest postProcessPaymentRequest, PaymentRequest payment)
@@ -83,7 +84,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
             foreach (var product in postProcessPaymentRequest.Order.OrderItems)
             {
                 Item item = new Item();
-                item.Amount = Math.Round(GetConvertedRate(product.UnitPriceInclTax, postProcessPaymentRequest), 2);
+                item.Amount = Math.Round(GetConvertedRate(product.UnitPriceInclTax), 2);
                 item.Description = product.Product.Name;
                 item.Id = product.Id.ToString();
                 item.Quantity = product.Quantity;
