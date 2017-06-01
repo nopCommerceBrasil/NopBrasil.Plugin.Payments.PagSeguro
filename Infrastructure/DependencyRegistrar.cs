@@ -13,7 +13,6 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Infrastructure
         {
             builder.RegisterType<PaymentPagSeguroController>().AsSelf();
             builder.RegisterType<PagSeguroService>().As<IPagSeguroService>().InstancePerDependency();
-            //.WithParameter(ResolvedParameter.ForNamed<ICacheManager>("nop_cache_static"))
         }
 
         public int Order => 2;

@@ -16,19 +16,20 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
         private readonly ISettingService _settingService;
         private readonly ICurrencyService _currencyService;
         private readonly CurrencySettings _currencySettings;
+        private readonly PagSeguroPaymentSetting _pagSeguroPaymentSetting;
 
-        public PagSeguroService(ISettingService settingService, ICurrencyService currencyService, CurrencySettings currencySettings)
+        public PagSeguroService(ISettingService settingService, ICurrencyService currencyService, CurrencySettings currencySettings, PagSeguroPaymentSetting pagSeguroPaymentSetting)
         {
             this._settingService = settingService;
             this._currencyService = currencyService;
             this._currencySettings = currencySettings;
+            this._pagSeguroPaymentSetting = pagSeguroPaymentSetting;
         }
 
         public Uri CreatePayment(PostProcessPaymentRequest postProcessPaymentRequest)
         {
             // Seta as credenciais
-            PagSeguroPaymentSetting pagSeguroPaymentSetting = _settingService.LoadSetting<PagSeguroPaymentSetting>();
-            AccountCredentials credentials = new AccountCredentials(@pagSeguroPaymentSetting.PagSeguroEmail, @pagSeguroPaymentSetting.PagSeguroToken);
+            AccountCredentials credentials = new AccountCredentials(@_pagSeguroPaymentSetting.PagSeguroEmail, @_pagSeguroPaymentSetting.PagSeguroToken);
 
             PaymentRequest payment = new PaymentRequest();
             payment.Currency = CURRENCY_CODE;
@@ -45,7 +46,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Services
         {
             payment.Sender = new Sender();
             payment.Sender.Email = postProcessPaymentRequest.Order.Customer.Email;
-            payment.Sender.Name = postProcessPaymentRequest.Order.BillingAddress.FirstName + " " + postProcessPaymentRequest.Order.BillingAddress.LastName;
+            payment.Sender.Name = $"{postProcessPaymentRequest.Order.BillingAddress.FirstName} {postProcessPaymentRequest.Order.BillingAddress.LastName}";
         }
 
         private decimal GetConvertedRate(decimal rate)

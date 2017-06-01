@@ -52,7 +52,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
         public ActionResult PaymentInfo() => View("~/Plugins/Payments.PagSeguro/Views/PaymentPagSeguro/PaymentInfo.cshtml");
 
         [NonAction]
-        public override IList<string> ValidatePaymentForm(FormCollection form) => new List<String>();
+        public override IList<string> ValidatePaymentForm(FormCollection form) => new List<string>();
 
         [NonAction]
         public override ProcessPaymentRequest GetPaymentInfo(FormCollection form) => new ProcessPaymentRequest();
