@@ -144,6 +144,9 @@
     <EmbeddedResource Include="Views\PaymentPagSeguro\PaymentInfo.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="Content\Images\logoPagamento.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Images\nopCommerceBrasil.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -158,9 +161,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Images\logoPagamento.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\PagSeguro.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

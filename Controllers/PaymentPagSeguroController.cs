@@ -29,7 +29,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
         [ChildActionOnly]
         public ActionResult Configure()
         {
-            var model = new ConfigurationModel() { PagSeguroToken = _pagSeguroPaymentSetting.PagSeguroToken, PagSeguroEmail = _pagSeguroPaymentSetting.PagSeguroEmail };
+            var model = new ConfigurationModel() { PagSeguroToken = _pagSeguroPaymentSetting.PagSeguroToken, PagSeguroEmail = _pagSeguroPaymentSetting.PagSeguroEmail, PaymentMethodDescription = _pagSeguroPaymentSetting.PaymentMethodDescription };
             return View(@"~/Plugins/Payments.PagSeguro/Views/PaymentPagSeguro/Configure.cshtml", model);
         }
 
@@ -43,6 +43,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
 
             _pagSeguroPaymentSetting.PagSeguroToken = model.PagSeguroToken;
             _pagSeguroPaymentSetting.PagSeguroEmail = model.PagSeguroEmail;
+            _pagSeguroPaymentSetting.PaymentMethodDescription = model.PaymentMethodDescription;
             _settingService.SaveSetting(_pagSeguroPaymentSetting);
 
             return View(@"~/Plugins/Payments.PagSeguro/Views/PaymentPagSeguro/Configure.cshtml", model);

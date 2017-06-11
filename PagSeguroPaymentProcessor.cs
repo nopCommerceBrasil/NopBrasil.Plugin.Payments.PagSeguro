@@ -19,13 +19,15 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         private readonly ILogger _logger;
         private readonly IPagSeguroService _pagSeguroService;
         private readonly ISettingService _settingService;
+        private readonly PagSeguroPaymentSetting _pagSeguroSetting;
 
-        public PagSeguroPaymentProcessor(ILogger logger, HttpContextBase httpContext, IPagSeguroService pagSeguroService, ISettingService settingService)
+        public PagSeguroPaymentProcessor(ILogger logger, HttpContextBase httpContext, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting)
         {
             this._httpContext = httpContext;
             this._logger = logger;
             this._pagSeguroService = pagSeguroService;
             this._settingService = settingService;
+            this._pagSeguroSetting = pagSeguroSetting;
         }
 
         public override void Install()
@@ -33,6 +35,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this.AddOrUpdatePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection", "Você será redirecionado para a pagina do Uol PagSeguro");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro", "Email - PagSeguro");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.Token.PagSeguro", "Token - PagSeguro");
+            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro", "Descrição que será exibida no checkout");
             base.Install();
         }
 
@@ -42,6 +45,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this.DeletePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection");
             this.DeletePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro");
             this.DeletePluginLocaleResource("Plugins.Payments.Token.PagSeguro");
+            this.DeletePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro");
             base.Uninstall();
         }
 
@@ -120,6 +124,6 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
 
         public bool SkipPaymentInfo => false;
 
-        public string PaymentMethodDescription => "PagSeguro";
+        public string PaymentMethodDescription => _pagSeguroSetting.PaymentMethodDescription;
     }
 }

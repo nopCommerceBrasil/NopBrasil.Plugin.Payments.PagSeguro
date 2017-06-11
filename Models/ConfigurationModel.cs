@@ -10,5 +10,8 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Models
 
         [NopResourceDisplayName("Plugins.Payments.Token.PagSeguro")]
         public string PagSeguroToken { get; set; }
+
+        [NopResourceDisplayName("Plugins.Payments.MethodDescription.PagSeguro")]
+        public string PaymentMethodDescription { get; set; }
     }
 }
