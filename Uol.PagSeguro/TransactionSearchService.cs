@@ -79,6 +79,45 @@ namespace Uol.PagSeguro
             }
         }
 
+        public static TransactionSearchResult SearchByReference(Credentials credentials, string referenceCode)
+        {
+            if (credentials == null)
+                throw new ArgumentNullException("credentials");
+            if (referenceCode == null)
+                throw new ArgumentNullException("referenceCode");
+
+            PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "TransactionSearchService.SearchByReference(referenceCode={0}) - begin", referenceCode));
+
+            UriBuilder uriBuilder = new UriBuilder(PagSeguroConfiguration.SearchUri);
+            StringBuilder pathBuilder = new StringBuilder(uriBuilder.Path);
+            uriBuilder.Path = pathBuilder.ToString();
+            uriBuilder.Query = $"{ServiceHelper.EncodeCredentialsAsQueryString(credentials)}&reference={HttpUtility.UrlEncode(referenceCode)}";
+
+            WebRequest request = WebRequest.Create(uriBuilder.Uri);
+            request.Method = ServiceHelper.GetMethod;
+            request.Timeout = PagSeguroConfiguration.RequestTimeout;
+
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    using (XmlReader reader = XmlReader.Create(response.GetResponseStream()))
+                    {
+                        TransactionSearchResult result = new TransactionSearchResult();
+                        TransactionSearchResultSerializer.Read(reader, result);
+                        PagSeguroTrace.Info(String.Format(CultureInfo.InvariantCulture, "TransactionSearchService.SearchByReference(referenceCode={0}) - end", referenceCode));
+                        return result;
+                    }
+                }
+            }
+            catch (WebException exception)
+            {
+                PagSeguroServiceException pse = ServiceHelper.CreatePagSeguroServiceException((HttpWebResponse)exception.Response);
+                PagSeguroTrace.Error(String.Format(CultureInfo.InvariantCulture, "TransactionSearchService.SearchByReference(referenceCode={0}) - error {1}", referenceCode, pse));
+                throw pse;
+            }
+        }
+
         /// <summary>
         /// Search transactions associated with this set of credentials within a date range
         /// </summary>

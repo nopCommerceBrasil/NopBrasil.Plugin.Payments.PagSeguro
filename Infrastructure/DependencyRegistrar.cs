@@ -4,6 +4,7 @@ using Nop.Core.Infrastructure;
 using Nop.Core.Infrastructure.DependencyManagement;
 using NopBrasil.Plugin.Payments.PagSeguro.Controllers;
 using NopBrasil.Plugin.Payments.PagSeguro.Services;
+using NopBrasil.Plugin.Payments.PagSeguro.Task;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro.Infrastructure
 {
@@ -13,6 +14,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Infrastructure
         {
             builder.RegisterType<PaymentPagSeguroController>().AsSelf();
             builder.RegisterType<PagSeguroService>().As<IPagSeguroService>().InstancePerDependency();
+            builder.RegisterType<CheckPaymentTask>().AsSelf().InstancePerDependency();
         }
 
         public int Order => 2;

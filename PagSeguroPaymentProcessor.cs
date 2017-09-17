@@ -10,6 +10,7 @@ using NopBrasil.Plugin.Payments.PagSeguro.Controllers;
 using Nop.Core.Domain.Payments;
 using NopBrasil.Plugin.Payments.PagSeguro.Services;
 using Nop.Services.Localization;
+using NopBrasil.Plugin.Payments.PagSeguro.Task;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro
 {
@@ -20,14 +21,16 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         private readonly IPagSeguroService _pagSeguroService;
         private readonly ISettingService _settingService;
         private readonly PagSeguroPaymentSetting _pagSeguroSetting;
+        private readonly CheckPaymentTask _checkPaymentTask;
 
-        public PagSeguroPaymentProcessor(ILogger logger, HttpContextBase httpContext, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting)
+        public PagSeguroPaymentProcessor(ILogger logger, HttpContextBase httpContext, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting, CheckPaymentTask checkPaymentTask)
         {
             this._httpContext = httpContext;
             this._logger = logger;
             this._pagSeguroService = pagSeguroService;
             this._settingService = settingService;
             this._pagSeguroSetting = pagSeguroSetting;
+            this._checkPaymentTask = checkPaymentTask;
         }
 
         public override void Install()
@@ -36,6 +39,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro", "Email - PagSeguro");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.Token.PagSeguro", "Token - PagSeguro");
             this.AddOrUpdatePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro", "Descrição que será exibida no checkout");
+            _checkPaymentTask.InstallTask();
             base.Install();
         }
 
@@ -46,6 +50,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this.DeletePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro");
             this.DeletePluginLocaleResource("Plugins.Payments.Token.PagSeguro");
             this.DeletePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro");
+            _checkPaymentTask.UninstallTask();
             base.Uninstall();
         }
 
