@@ -13,12 +13,10 @@
 //   limitations under the License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Xml;
 using Uol.PagSeguro.Serialization;
-using System.Web;
 using System.Globalization;
 
 namespace Uol.PagSeguro
@@ -50,7 +48,8 @@ namespace Uol.PagSeguro
 
             UriBuilder uriBuilder = new UriBuilder(PagSeguroConfiguration.SearchUri);
             StringBuilder pathBuilder = new StringBuilder(uriBuilder.Path);
-            pathBuilder.Append('/').Append(HttpUtility.UrlEncode(transactionCode));
+
+            pathBuilder.Append('/').Append(WebUtility.UrlEncode(transactionCode));
             uriBuilder.Path = pathBuilder.ToString();
             uriBuilder.Query = ServiceHelper.EncodeCredentialsAsQueryString(credentials);
 
@@ -91,7 +90,7 @@ namespace Uol.PagSeguro
             UriBuilder uriBuilder = new UriBuilder(PagSeguroConfiguration.SearchUri);
             StringBuilder pathBuilder = new StringBuilder(uriBuilder.Path);
             uriBuilder.Path = pathBuilder.ToString();
-            uriBuilder.Query = $"{ServiceHelper.EncodeCredentialsAsQueryString(credentials)}&reference={HttpUtility.UrlEncode(referenceCode)}";
+            uriBuilder.Query = $"{ServiceHelper.EncodeCredentialsAsQueryString(credentials)}&reference={WebUtility.UrlEncode(referenceCode)}";
 
             WebRequest request = WebRequest.Create(uriBuilder.Uri);
             request.Method = ServiceHelper.GetMethod;

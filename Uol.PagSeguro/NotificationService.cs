@@ -13,12 +13,10 @@
 //   limitations under the License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Xml;
 using Uol.PagSeguro.Serialization;
-using System.Web;
 using System.Globalization;
 
 namespace Uol.PagSeguro
@@ -44,7 +42,7 @@ namespace Uol.PagSeguro
             UriBuilder uriBuilder = new UriBuilder(PagSeguroConfiguration.NotificationUri);
             StringBuilder pathBuilder = new StringBuilder(uriBuilder.Path);
             pathBuilder.Append('/');
-            pathBuilder.Append(HttpUtility.UrlEncode(notificationCode));
+            pathBuilder.Append(WebUtility.UrlEncode(notificationCode));
             pathBuilder.Append('/');
             uriBuilder.Path = pathBuilder.ToString();
             uriBuilder.Query = ServiceHelper.EncodeCredentialsAsQueryString(credentials);

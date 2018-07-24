@@ -13,11 +13,10 @@
 //   limitations under the License.
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Xml;
-using System.Web;
+using System.Net;
 
 namespace Uol.PagSeguro
 {
@@ -46,9 +45,9 @@ namespace Uol.PagSeguro
             {
                 builder.Append(QueryStringBuilder.Separator);
             }
-            builder.Append(HttpUtility.UrlEncode(parameterName));
+            builder.Append(WebUtility.UrlEncode(parameterName));
             builder.Append(QueryStringBuilder.Equal);
-            builder.Append(HttpUtility.UrlEncode(value));
+            builder.Append(WebUtility.UrlEncode(value));
         }
 
         public QueryStringBuilder Append(string parameterName, string value)

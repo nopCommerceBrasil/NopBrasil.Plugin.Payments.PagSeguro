@@ -1,203 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0CEC3B6F-5869-4098-B691-13CB282D34C5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NopBrasil.Plugin.Payments.PagSeguro</RootNamespace>
-    <AssemblyName>NopBrasil.Plugin.Payments.PagSeguro</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <SccProjectName>%24/PrimeCommerce/nopCommerce/Plugins/NopBrasil.Plugin.Payments.PagSeguro</SccProjectName>
-    <SccLocalPath>.</SccLocalPath>
-    <SccAuxPath>https://NopBrasil.visualstudio.com/defaultcollection</SccAuxPath>
-    <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\nopCommerce390\Presentation\Nop.Web\Plugins\Payments.PagSeguro\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\nopCommerce390\Presentation\Nop.Web\Plugins\Payments.PagSeguro\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="Autofac, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\nopCommerce390\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Infrastructure\DependencyRegistrar.cs" />
-    <Compile Include="Services\IPagSeguroService.cs" />
-    <Compile Include="Services\PagSeguroService.cs" />
-    <Compile Include="Controllers\PaymentPagSeguroController.cs" />
-    <Compile Include="Models\ConfigurationModel.cs" />
-    <Compile Include="PagSeguroPaymentProcessor.cs" />
-    <Compile Include="PagSeguroPaymentSetting.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Task\CheckPaymentTask.cs" />
-    <Compile Include="Uol.PagSeguro\AccountCredentials.cs" />
-    <Compile Include="Uol.PagSeguro\Address.cs" />
-    <Compile Include="Uol.PagSeguro\Credentials.cs" />
-    <Compile Include="Uol.PagSeguro\CredentialsNameValuePair.cs" />
-    <Compile Include="Uol.PagSeguro\Currency.cs" />
-    <Compile Include="Uol.PagSeguro\Item.cs" />
-    <Compile Include="Uol.PagSeguro\NotificationService.cs" />
-    <Compile Include="Uol.PagSeguro\PagSeguroConfiguration.cs" />
-    <Compile Include="Uol.PagSeguro\PagSeguroServiceError.cs" />
-    <Compile Include="Uol.PagSeguro\PagSeguroServiceException.cs" />
-    <Compile Include="Uol.PagSeguro\PagSeguroTrace.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentMethod.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentMethodCode.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentMethodType.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentRequest.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentRequestResponse.cs" />
-    <Compile Include="Uol.PagSeguro\PaymentService.cs" />
-    <Compile Include="Uol.PagSeguro\Phone.cs" />
-    <Compile Include="Uol.PagSeguro\QueryStringBuilder.cs" />
-    <Compile Include="Uol.PagSeguro\Sender.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\AddressSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\ItemListSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\ItemSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PagSeguroErrorSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PagSeguroErrorsSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PaymentMethodSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PaymentRequestResponseSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PaymentRequestSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\PhoneSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\SenderSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\SerializationHelper.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\ShippingSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\TransactionSearchResultSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\TransactionSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\TransactionSerializerHelper.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\TransactionSummaryListSerializer.cs" />
-    <Compile Include="Uol.PagSeguro\Serialization\TransactionSummarySerializer.cs" />
-    <Compile Include="Uol.PagSeguro\ServiceHelper.cs" />
-    <Compile Include="Uol.PagSeguro\Shipping.cs" />
-    <Compile Include="Uol.PagSeguro\ShippingType.cs" />
-    <Compile Include="Uol.PagSeguro\Transaction.cs" />
-    <Compile Include="Uol.PagSeguro\TransactionSearchResult.cs" />
-    <Compile Include="Uol.PagSeguro\TransactionSearchService.cs" />
-    <Compile Include="Uol.PagSeguro\TransactionStatus.cs" />
-    <Compile Include="Uol.PagSeguro\TransactionSummary.cs" />
-    <Compile Include="Uol.PagSeguro\TransactionType.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <EmbeddedResource Include="Views\PaymentPagSeguro\Configure.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Uol.PagSeguro\Uol.PagSeguro.FxCop" />
-    <EmbeddedResource Include="Views\PaymentPagSeguro\PaymentInfo.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Content Include="Content\Images\logoPagamento.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Images\nopCommerceBrasil.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="logo.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="web.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\PagSeguro.css">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Description.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\nopCommerce390\Libraries\Nop.Core\Nop.Core.csproj">
-      <Project>{6bda8332-939f-45b7-a25e-7a797260ae59}</Project>
-      <Name>Nop.Core</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\nopCommerce390\Libraries\Nop.Data\Nop.Data.csproj">
-      <Project>{ccd7f2c9-6a2c-4cf0-8e89-076b8fc0f144}</Project>
-      <Name>Nop.Data</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\nopCommerce390\Libraries\Nop.Services\Nop.Services.csproj">
-      <Project>{210541ad-f659-47da-8763-16f36c5cd2f4}</Project>
-      <Name>Nop.Services</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\nopCommerce390\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj">
-      <Project>{75fd4163-333c-4dd5-854d-2ef294e45d94}</Project>
-      <Name>Nop.Web.Framework</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+﻿<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup>
+   <TargetFramework>net461</TargetFramework>
+    <Copyright>Copyright © nopCommerce Brasil</Copyright> 
+    <Company>nopCommerce Brasil</Company> 
+    <Authors>nopCommerce Brasil - www.nopcommercebrasil.com - nopcommercebrasil@nopcommercebrasil.com</Authors> 
+    <Version>1.00</Version> 
+    <Description>Payment plugin for integration with UOL PagSeguro for nopCommerce</Description> 
+    <PackageLicenseUrl></PackageLicenseUrl> 
+    <PackageProjectUrl>http://www.nopcommercebrasil.com/</PackageProjectUrl> 
+    <RepositoryUrl>https://github.com/nopCommerceBrasil/NopBrasil.Plugin.Payments.PagSeguro</RepositoryUrl> 
+    <RepositoryType>Git</RepositoryType>
+ </PropertyGroup>  
+ <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+   <OutputPath>..\nopCommerce400\Presentation\Nop.Web\Plugins\Payments.PagSeguro\</OutputPath>
+   <OutDir>$(OutputPath)</OutDir>
+ </PropertyGroup>
+ <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+   <OutputPath>..\nopCommerce400\Presentation\Nop.Web\Plugins\Payments.PagSeguro\</OutputPath>
+   <OutDir>$(OutputPath)</OutDir>
+ </PropertyGroup>
+ <!-- This target execute after "Build" target -->
+ <Target Name="NopTarget" AfterTargets="Build">
+   <!-- Delete unnecessary libraries from plugins path -->
+   <MSBuild Projects="$(MSBuildProjectDirectory)\..\nopCommerce400\Build\ClearPluginAssemblies.proj" Properties="PluginPath=$(MSBuildProjectDirectory)\$(OutDir)" Targets="NopClear" />
+ </Target>
+ <ItemGroup>
+   <None Remove="Content\Images\nopCommerceBrasil.png" />
+   <None Remove="Logo.jpg" />
+   <None Remove="plugin.json" />
+   <None Remove="Views\Configure.cshtml" />
+   <None Remove="Views\_ViewImports.cshtml" />
+ </ItemGroup>
+ <ItemGroup>
+   <Content Include="Content\Images\nopCommerceBrasil.png">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="Logo.jpg">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="plugin.json">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="Views\Configure.cshtml">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="Views\_ViewImports.cshtml">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+ </ItemGroup>
+ <ItemGroup>
+   <ProjectReference Include="..\nopCommerce400\Presentation\Nop.Web.Framework\Nop.Web.Framework.csproj" />
+   <ProjectReference Include="..\nopCommerce400\Presentation\Nop.Web\Nop.Web.csproj" />
+ </ItemGroup>
 </Project>

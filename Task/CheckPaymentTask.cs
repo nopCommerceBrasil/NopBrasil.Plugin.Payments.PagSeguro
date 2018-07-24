@@ -4,7 +4,7 @@ using NopBrasil.Plugin.Payments.PagSeguro.Services;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro.Task
 {
-    public class CheckPaymentTask : ITask
+    public class CheckPaymentTask : IScheduleTask
     {
         private readonly IScheduleTaskService _scheduleTaskService;
         private readonly IPagSeguroService _pagSeguroService;
@@ -32,7 +32,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Task
             return task;
         }
 
-        protected string GetTaskType() => "NopBrasil.Plugin.Payments.PagSeguro.Task.CheckPaymentTask, NopBrasil.Plugin.Payments.PagSeguro";
+        protected string GetTaskType() => "NopBrasil.Plugin.Payments.PagSeguro.Task.CheckPaymentTask";
 
         public void InstallTask()
         {
