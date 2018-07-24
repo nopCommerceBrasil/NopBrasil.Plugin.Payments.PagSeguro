@@ -25,6 +25,7 @@
    <MSBuild Projects="$(MSBuildProjectDirectory)\..\nopCommerce400\Build\ClearPluginAssemblies.proj" Properties="PluginPath=$(MSBuildProjectDirectory)\$(OutDir)" Targets="NopClear" />
  </Target>
  <ItemGroup>
+   <None Remove="Content\Images\logoPagamento.png" />
    <None Remove="Content\Images\nopCommerceBrasil.png" />
    <None Remove="Logo.jpg" />
    <None Remove="plugin.json" />
@@ -33,6 +34,9 @@
    <None Remove="Views\_ViewImports.cshtml" />
  </ItemGroup>
  <ItemGroup>
+   <Content Include="Content\Images\logoPagamento.png">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
    <Content Include="Content\Images\nopCommerceBrasil.png">
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </Content>
