@@ -10,6 +10,7 @@ using Nop.Services.Security;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
 {
+    [Area(AreaNames.Admin)]
     public class PaymentPagSeguroController : BasePaymentController
     {
         private readonly ISettingService _settingService;
@@ -29,7 +30,6 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
         }
 
         [AuthorizeAdmin]
-        [Area(AreaNames.Admin)]
         public IActionResult Configure()
         {
             var model = new ConfigurationModel()
@@ -38,13 +38,12 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
                 PagSeguroEmail = _pagSeguroPaymentSetting.PagSeguroEmail,
                 PaymentMethodDescription = _pagSeguroPaymentSetting.PaymentMethodDescription
             };
-            return View(@"~/Plugins/Payments.PagSeguro/Views/PaymentPagSeguro/Configure.cshtml", model);
+            return View(@"~/Plugins/Payments.PagSeguro/Views/Configure.cshtml", model);
         }
 
         [HttpPost]
         [AuthorizeAdmin]
         [AdminAntiForgery]
-        [Area(AreaNames.Admin)]
         public IActionResult Configure(ConfigurationModel model)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManagePaymentMethods))
@@ -58,7 +57,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
             _pagSeguroPaymentSetting.PaymentMethodDescription = model.PaymentMethodDescription;
             _settingService.SaveSetting(_pagSeguroPaymentSetting);
 
-            return View(@"~/Plugins/Payments.PagSeguro/Views/PaymentPagSeguro/Configure.cshtml", model);
+            return View(@"~/Plugins/Payments.PagSeguro/Views/Configure.cshtml", model);
         }
     }
 }

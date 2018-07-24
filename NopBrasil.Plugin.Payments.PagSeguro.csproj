@@ -29,6 +29,7 @@
    <None Remove="Logo.jpg" />
    <None Remove="plugin.json" />
    <None Remove="Views\Configure.cshtml" />
+   <None Remove="Views\PaymentInfo.cshtml" />
    <None Remove="Views\_ViewImports.cshtml" />
  </ItemGroup>
  <ItemGroup>
@@ -42,6 +43,9 @@
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </Content>
    <Content Include="Views\Configure.cshtml">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="Views\PaymentInfo.cshtml">
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </Content>
    <Content Include="Views\_ViewImports.cshtml">

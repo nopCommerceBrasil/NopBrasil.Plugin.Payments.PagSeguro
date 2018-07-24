@@ -11,6 +11,7 @@ using Nop.Services.Localization;
 using NopBrasil.Plugin.Payments.PagSeguro.Task;
 using Microsoft.AspNetCore.Http;
 using Nop.Core.Domain.Orders;
+using Nop.Core;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro
 {
@@ -22,8 +23,10 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         private readonly ISettingService _settingService;
         private readonly PagSeguroPaymentSetting _pagSeguroSetting;
         private readonly CheckPaymentTask _checkPaymentTask;
+        private readonly IWebHelper _webHelper;
 
-        public PagSeguroPaymentProcessor(ILogger logger, IHttpContextAccessor httpContextAccessor, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting, CheckPaymentTask checkPaymentTask)
+        public PagSeguroPaymentProcessor(ILogger logger, IHttpContextAccessor httpContextAccessor, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting,
+            CheckPaymentTask checkPaymentTask, IWebHelper webHelper)
         {
             this._logger = logger;
             this._httpContextAccessor = httpContextAccessor;
@@ -31,6 +34,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this._settingService = settingService;
             this._pagSeguroSetting = pagSeguroSetting;
             this._checkPaymentTask = checkPaymentTask;
+            this._webHelper = webHelper;
         }
 
         public override void Install()
@@ -115,5 +119,7 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         public bool SkipPaymentInfo => false;
 
         public string PaymentMethodDescription => _pagSeguroSetting.PaymentMethodDescription;
+                                                                                                   
+        public override string GetConfigurationPageUrl() => $"{_webHelper.GetStoreLocation()}Admin/PaymentPagSeguro/Configure";
     }
 }
