@@ -27,6 +27,7 @@
  <ItemGroup>
    <None Remove="Content\Images\logoPagamento.png" />
    <None Remove="Content\Images\nopCommerceBrasil.png" />
+   <None Remove="Content\PagSeguro.css" />
    <None Remove="Logo.jpg" />
    <None Remove="plugin.json" />
    <None Remove="Views\Configure.cshtml" />
@@ -38,6 +39,9 @@
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </Content>
    <Content Include="Content\Images\nopCommerceBrasil.png">
+     <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+   </Content>
+   <Content Include="Content\PagSeguro.css">
      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
    </Content>
    <Content Include="Logo.jpg">
