@@ -1,7 +1,5 @@
-﻿using Nop.Core;
-using Nop.Services.Configuration;
+﻿using Nop.Services.Configuration;
 using Nop.Web.Framework.Controllers;
-using NopBrasil.Plugin.Payments.PagSeguro.Services;
 using NopBrasil.Plugin.Payments.PagSeguro.Models;
 using Nop.Web.Framework;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +12,12 @@ namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
     public class PaymentPagSeguroController : BasePaymentController
     {
         private readonly ISettingService _settingService;
-        private readonly IWebHelper _webHelper;
-        private readonly IPagSeguroService _pagSeguroService;
         private readonly PagSeguroPaymentSetting _pagSeguroPaymentSetting;
         private readonly IPermissionService _permissionService;
 
-        public PaymentPagSeguroController(ISettingService settingService, IWebHelper webHelper, IPagSeguroService pagSeguroService, PagSeguroPaymentSetting pagSeguroPaymentSetting,
-            IPermissionService permissionService)
+        public PaymentPagSeguroController(ISettingService settingService, PagSeguroPaymentSetting pagSeguroPaymentSetting, IPermissionService permissionService)
         {
             this._settingService = settingService;
-            this._webHelper = webHelper;
-            this._pagSeguroService = pagSeguroService;
             this._pagSeguroPaymentSetting = pagSeguroPaymentSetting;
             this._permissionService = permissionService;
         }

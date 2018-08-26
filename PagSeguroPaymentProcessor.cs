@@ -24,9 +24,10 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         private readonly PagSeguroPaymentSetting _pagSeguroSetting;
         private readonly CheckPaymentTask _checkPaymentTask;
         private readonly IWebHelper _webHelper;
+        private readonly ILocalizationService _localizationService;
 
         public PagSeguroPaymentProcessor(ILogger logger, IHttpContextAccessor httpContextAccessor, IPagSeguroService pagSeguroService, ISettingService settingService, PagSeguroPaymentSetting pagSeguroSetting,
-            CheckPaymentTask checkPaymentTask, IWebHelper webHelper)
+            CheckPaymentTask checkPaymentTask, IWebHelper webHelper, ILocalizationService localizationService)
         {
             this._logger = logger;
             this._httpContextAccessor = httpContextAccessor;
@@ -35,14 +36,15 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
             this._pagSeguroSetting = pagSeguroSetting;
             this._checkPaymentTask = checkPaymentTask;
             this._webHelper = webHelper;
+            this._localizationService = localizationService;
         }
 
         public override void Install()
         {
-            this.AddOrUpdatePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection", "Você será redirecionado para a pagina do Uol PagSeguro");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro", "Email - PagSeguro");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.Token.PagSeguro", "Token - PagSeguro");
-            this.AddOrUpdatePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro", "Descrição que será exibida no checkout");
+            _localizationService.AddOrUpdatePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection", "Você será redirecionado para a pagina do Uol PagSeguro");
+            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro", "Email - PagSeguro");
+            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.Token.PagSeguro", "Token - PagSeguro");
+            _localizationService.AddOrUpdatePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro", "Descrição que será exibida no checkout");
             _checkPaymentTask.InstallTask();
             base.Install();
         }
@@ -51,10 +53,10 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
         {
             _checkPaymentTask.UninstallTask();
             _settingService.DeleteSetting<PagSeguroPaymentSetting>();
-            this.DeletePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection");
-            this.DeletePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro");
-            this.DeletePluginLocaleResource("Plugins.Payments.Token.PagSeguro");
-            this.DeletePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro");
+            _localizationService.DeletePluginLocaleResource("NopBrasil.Plugins.Payments.PagSeguro.Fields.Redirection");
+            _localizationService.DeletePluginLocaleResource("Plugins.Payments.EmailAdmin.PagSeguro");
+            _localizationService.DeletePluginLocaleResource("Plugins.Payments.Token.PagSeguro");
+            _localizationService.DeletePluginLocaleResource("Plugins.Payments.MethodDescription.PagSeguro");
             base.Uninstall();
         }
 
@@ -114,12 +116,12 @@ namespace NopBrasil.Plugin.Payments.PagSeguro
 
         public ProcessPaymentRequest GetPaymentInfo(IFormCollection form) => new ProcessPaymentRequest();
 
-        public void GetPublicViewComponent(out string viewComponentName) => viewComponentName = "PaymentPagSeguro";
-
         public bool SkipPaymentInfo => false;
 
         public string PaymentMethodDescription => _pagSeguroSetting.PaymentMethodDescription;
                                                                                                    
         public override string GetConfigurationPageUrl() => $"{_webHelper.GetStoreLocation()}Admin/PaymentPagSeguro/Configure";
+
+        public string GetPublicViewComponentName() => "PaymentPagSeguro";
     }
 }
