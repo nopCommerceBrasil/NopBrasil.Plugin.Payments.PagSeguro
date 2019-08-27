@@ -3,7 +3,7 @@
   "FriendlyName": "PagSeguro",
   "SystemName": "Payments.PagSeguro",
   "Version": "1.00",
-  "SupportedVersions": [ "4.10" ],
+  "SupportedVersions": [ "4.20" ],
   "Author": "nopCommerce Brasil - www.nopcommercebrasil.com - nopcommercebrasil@nopcommercebrasil.com",
   "DisplayOrder": 1,
   "FileName": "NopBrasil.Plugin.Payments.PagSeguro.dll",

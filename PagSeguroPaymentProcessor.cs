@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Nop.Core.Plugins;
+using Nop.Services.Plugins;
 using Nop.Services.Payments;
 using Nop.Services.Configuration;
 using Nop.Services.Logging;
