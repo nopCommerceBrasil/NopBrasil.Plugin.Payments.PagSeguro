@@ -10,6 +10,7 @@ using Nop.Services.Localization;
 
 namespace NopBrasil.Plugin.Payments.PagSeguro.Controllers
 {
+    [AuthorizeAdmin]
     [Area(AreaNames.Admin)]
     public class PaymentPagSeguroController : BasePaymentController
     {
